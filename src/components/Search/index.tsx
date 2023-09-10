@@ -1,45 +1,75 @@
-import { useState } from "react"
-import { useLazyGetPostsQuery } from "../../store/slice/booksSlice"
-import { FilterField } from "../FilterField"
+import { useEffect, useState } from "react"
+import { useLazyGetBooksQuery } from "../../store/slice/booksSlice"
+import { FilterField, ListItemI } from "../FilterField"
 import { SearchField } from "../SearchField"
 
-export const Search = () => {
-  
-    const [searchData, setSearchData] = useState({
-    inputData: '',
-    category: 'all',
-    sort: 'relevance'
-})
+type PropsType = {
+    onSearch: (searchData: SearchDataI) => void
+}
 
-    const setInputDataHandler = (e:React.ChangeEvent<HTMLInputElement>) => setSearchData(prev => ({
+export interface SearchDataI {
+    inputValue?: string,
+    category: ListItemI,
+    sort: ListItemI
+}
+export const Search = ({onSearch}: PropsType) => {
+
+    const [searchData, setSearchData] = useState<SearchDataI>({
+        inputValue: '',
+        category: {
+            id: 0,
+            title: 'all'
+        },
+        sort: {
+            id: 0,
+            title: 'relevance'
+        }
+    })
+
+    const setInputDataHandler = (inputValue: string) => setSearchData(prev => ({
         ...prev,
-        inputData: e.currentTarget.value
+        inputValue
     }))
 
-    // const setCategoryHandler = () => setSearchData(prev => ({
-    //     ...prev,
-    //     category: e.currentTarget.value
-    // }))
-    // const setSortHandler = () => setSearchData(prev => ({
-    //     ...prev,
-    //     sort: e.currentTarget.value
-    // }))
+    const setCategoryHandler = (category: ListItemI) => setSearchData(prev => ({
+        ...prev,
+        category
+    }))
+    const setSortHandler = (sort: ListItemI) => setSearchData(prev => ({
+        ...prev,
+        sort
+    }))
 
-    const [getPosts, data] = useLazyGetPostsQuery()
+    useEffect(()=>{
+        onSearch(searchData)
+    }, [searchData.category, searchData.sort])
 
-    const getBooks = () => {
-        getPosts({
-            title:  searchData.inputData
-        })
-    }
+    // const [getBooks, data] = useLazyGetBooksQuery()
+
+    const getBooksHandler = () => onSearch(searchData)
+
+    console.log(searchData)
 
     return (
         <div className="grid gap-[20px] max-w-[600px] justify-items-center w-full z-10 sticky top-[30px]">
-            <SearchField startSearching={getBooks} />
+
+            <SearchField
+                inputValue={searchData.inputValue}
+                onChangeInput={setInputDataHandler}
+                onSearch={getBooksHandler}
+            />
             <div className="flex w-full justify-between">
-                <FilterField type="category" />
-                <FilterField type="sort" />
+                <FilterField
+                    value={searchData.category}
+                    onChange={setCategoryHandler}
+                    type="category" />
+                <FilterField
+                    value={searchData.sort}
+                    onChange={setSortHandler}
+                    type="sort" />
             </div>
+
+
         </div>
     )
 }
