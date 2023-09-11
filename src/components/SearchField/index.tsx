@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { SearchButton } from "../../shared/buttons/SearchButton"
 
 type PropsType ={

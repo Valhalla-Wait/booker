@@ -32,11 +32,7 @@ export const MainPage = () => {
                 booksIsFetching ?
                     'Loading Books...'
                     :
-                    <BookList bookList={books.map((book: any) => ({
-                        id: book?.id,
-                        ...book?.volumeInfo,
-                    }))} />}
-
+                    <BookList bookList={books.map((book) => book)} />}
         </div>
     )
 }

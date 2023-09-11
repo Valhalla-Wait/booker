@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useAppDispatch } from "../../store"
 import { FilterField, ListItemI } from "../FilterField"
 import { SearchField } from "../SearchField"
 

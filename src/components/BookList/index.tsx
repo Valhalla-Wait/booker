@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../store"
-import { fetchBooks, fetchMoreBooks } from "../../store/slice/booksSlice"
-import { searchParamsDataSelector } from "../../store/slice/search/selectors"
+import { fetchMoreBooks } from "../../store/slice/booksSlice"
 import { booksDataSelector, moreBooksIsFetchingSelector } from "../../store/slice/selectors"
 import { BookI } from "../../store/slice/types"
 import {BookItem } from "../BookItem"

@@ -4,7 +4,7 @@ import { useGetBookByIdQuery } from "../../store/slice/booksSlice"
 
 export const BookPage = () => {
     const { id } = useParams()
-    const { data, isLoading, isError } = useGetBookByIdQuery(id as string)
+    const { data, isLoading } = useGetBookByIdQuery(id as string)
     console.log(data)
     return (
         <div className='flex items-center justify-center h-full md:h-[100vh] sm:p-[30px] md:p-[50px]'>
