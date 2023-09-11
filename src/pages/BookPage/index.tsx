@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { CategoryItem } from "../../components/BookItem/CategoryItem"
 import { useGetBookByIdQuery } from "../../store/slice/booksSlice"
 
@@ -7,26 +7,28 @@ export const BookPage = () => {
     const { data, isLoading, isError } = useGetBookByIdQuery(id as string)
     console.log(data)
     return (
-        <div className='flex items-center justify-center h-[100vh] px-[50px]'>
-            <div className="flex flex-col h-[600px] mx-auto my-auto w-full max-w-[1200px] p-[30px] gap-[20px] bg-slate-100 shadow-default">
+        <div className='flex items-center justify-center h-full md:h-[100vh] sm:p-[30px] md:p-[50px]'>
+            
+            <div className="flex flex-col w-full max-w-[1200px] p-[30px] gap-[20px] bg-slate-100 shadow-default">
                 <div>
                     {
                         isLoading ?
                             'Loading Book...'
                             :
                             <div className="grid gap-[20px]">
-                                <div className="flex gap-[20px]">
-                                    <div className="bg-slate-200 flex justify-center items-center max-w-[200px] h-[250px] w-full shadow-default">
+                                <Link className="underline w-min" to='/'>Back</Link>
+                                <div className="flex flex-col items-center justify-center gap-[30px] md:flex-row  md:justify-start">
+                                    <div className="bg-slate-200 flex justify-center items-center max-w-[200px] min-h-[250px] w-full shadow-default">
                                         <img src={data?.volumeInfo?.imageLinks?.thumbnail} alt="bookImg" />
                                     </div>
-                                    <div className="flex flex-col p-[15px] h-full gap-[15px]  ">
+                                    <div className="flex flex-col h-full gap-[15px] text-center items-center justify-evenly md:items-start md:text-left">
                                         <div className="text-[32px] font-bold">
                                             {data?.volumeInfo?.title}
                                         </div>
 
-                                        <div className="flex overflow-hidden  gap-[5px]">{data?.volumeInfo?.categories.map((category:string) => <CategoryItem fullContent title={category}/>)}</div>
+                                        <div className="flex overflow-hidden  gap-[5px]">{data?.volumeInfo?.categories?.map((category:string, index:number) => <CategoryItem key={index} fullContent title={category}/>)}</div>
 
-                                        <div className="text-[21px] italic">{!!data?.volumeInfo?.authors && `Авторы: ${data?.volumeInfo?.authors.map((author:string) => `${author}, `)}`}</div>
+                                        <div className="text-[21px] italic">{!!data?.volumeInfo?.authors && `Авторы: ${data?.volumeInfo?.authors.map((author:string) => ` ${author}`)}`}</div>
 
                                     </div>
                                 </div>

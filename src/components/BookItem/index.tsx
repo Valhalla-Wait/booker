@@ -23,7 +23,7 @@ export const BookItem = ({
                 <div className="flex flex-col p-[15px] h-full gap-[15px]  ">
                     <div className="font-bold overflow-hidden whitespace-nowrap text-ellipsis text-[24px]">{title}</div>
                     <div className="flex overflow-hidden  gap-[5px]">{categories && <CategoryItem title={categories[0]} />}</div>
-                    <div className="italic overflow-hidden whitespace-nowrap text-ellipsis text-[20px]">{authors && authors.map(author => `${author}, `)}</div>
+                    <div className="italic overflow-hidden whitespace-nowrap text-ellipsis text-[20px]">{authors && authors.map(author => ` ${author}`)}</div>
                 </div>
             </div>
         </Link>
