@@ -1,18 +1,21 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { booksSlice } from './slice/booksSlice';
+import { booksApi, booksSlice } from './slice/booksSlice';
+import { searchSlice } from './slice/search/searchSlice';
 // import { userApi } from './slice/Auth/queries';
 
 const rootReducer = combineReducers({
   // [signInSlice.name]: signInSlice.reducer,
   // [usersSlice.name]: usersSlice.reducer,
-  [booksSlice.reducerPath]: booksSlice.reducer,
+  [booksApi.reducerPath]: booksApi.reducer,
+  [booksSlice.name]: booksSlice.reducer,
+  [searchSlice.name]: searchSlice.reducer
 });
 
 // create a makeStore function
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(booksSlice.middleware)
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(booksApi.middleware)
 });
 
 export type RootStateType = ReturnType<typeof rootReducer>;

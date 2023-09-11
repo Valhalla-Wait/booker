@@ -15,7 +15,6 @@ body {
 
 ::-webkit-scrollbar {
     width: 15px;
-    cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb {

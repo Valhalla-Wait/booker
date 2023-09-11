@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useLazyGetBooksQuery } from "../../store/slice/booksSlice"
+import { useState } from "react"
+import { useAppDispatch } from "../../store"
 import { FilterField, ListItemI } from "../FilterField"
 import { SearchField } from "../SearchField"
 
@@ -31,24 +31,29 @@ export const Search = ({onSearch}: PropsType) => {
         inputValue
     }))
 
-    const setCategoryHandler = (category: ListItemI) => setSearchData(prev => ({
-        ...prev,
-        category
-    }))
-    const setSortHandler = (sort: ListItemI) => setSearchData(prev => ({
-        ...prev,
-        sort
-    }))
-
-    useEffect(()=>{
-        onSearch(searchData)
-    }, [searchData.category, searchData.sort])
-
-    // const [getBooks, data] = useLazyGetBooksQuery()
+    const setCategoryHandler = (category: ListItemI) => {
+        setSearchData(prev => ({
+            ...prev,
+            category
+        }))
+        onSearch({
+            ...searchData,
+            category
+        })
+    }
+    const setSortHandler = (sort: ListItemI) => {
+        setSearchData(prev => ({
+            ...prev,
+            sort
+        }))
+        onSearch({
+            ...searchData,
+            sort
+        })
+    }
 
     const getBooksHandler = () => onSearch(searchData)
-
-    console.log(searchData)
+    
 
     return (
         <div className="grid gap-[20px] max-w-[600px] justify-items-center w-full z-10 sticky top-[30px]">

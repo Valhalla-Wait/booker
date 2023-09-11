@@ -77,8 +77,8 @@ export const FilterField = ({ type, onChange, value}: PropsType) => {
     const onChangeHandler = (item: ListItemI) => onChange(item)
 
     return (
-        <Listbox className='' value={value} onChange={onChangeHandler}>
-            <div className="relative w-[150px]">
+        <Listbox className='w-[110px] sm:w-[150px]' value={value} onChange={onChangeHandler}>
+            <div className="relative">
                 <Listbox.Button className='h-[40px] font-semibold relative shadow-default bg-white w-full'>{value.title}</Listbox.Button>
                 <Transition
                     as={Fragment}
@@ -86,7 +86,7 @@ export const FilterField = ({ type, onChange, value}: PropsType) => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Listbox.Options className='absolute w-[150px]'>
+                    <Listbox.Options className='absolute w-[inherit]'>
                         {FilterList[type].map((item) => (item.id !== value.id) && <Listbox.Option className='bg-white border-[1px] border-slate-100 shadow-default cursor-pointer p-[10px] text-center font-semibold hover:bg-slate-100'
                             key={item.id}
                             value={item}

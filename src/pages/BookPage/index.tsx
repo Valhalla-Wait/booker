@@ -1,19 +1,50 @@
+import { useParams } from "react-router-dom"
 import { CategoryItem } from "../../components/BookItem/CategoryItem"
+import { useGetBookByIdQuery } from "../../store/slice/booksSlice"
 
 export const BookPage = () => {
+    const { id } = useParams()
+    const { data, isLoading, isError } = useGetBookByIdQuery(id as string)
+    console.log(data)
     return (
-        <div className="flex flex-col h-[100vh] mx-auto justify-center items-center max-w-[1200px] px-[50px] gap-[20px]">
-            <div>
-            <div className="min-h-[220px] bg-slate-500">IMH</div>
-                <div className="flex flex-col p-[15px] h-full gap-[15px]  ">
-                    <div className="font-bold overflow-hidden whitespace-nowrap text-ellipsis text-[24px]">{title}</div>
-                    <div className="flex overflow-hidden  gap-[5px]">{categories.map(category => <CategoryItem title={category}/>)}</div>
-                    <div className="italic overflow-hidden whitespace-nowrap text-ellipsis text-[20px]">{authors.map(author => `${author}, `)}</div>
+        <div className='flex items-center justify-center h-[100vh] px-[50px]'>
+            <div className="flex flex-col h-[600px] mx-auto my-auto w-full max-w-[1200px] p-[30px] gap-[20px] bg-slate-100 shadow-default">
+                <div>
+                    {
+                        isLoading ?
+                            'Loading Book...'
+                            :
+                            <div className="grid gap-[20px]">
+                                <div className="flex gap-[20px]">
+                                    <div className="bg-slate-200 flex justify-center items-center max-w-[200px] h-[250px] w-full shadow-default">
+                                        <img src={data?.volumeInfo?.imageLinks?.thumbnail} alt="bookImg" />
+                                    </div>
+                                    <div className="flex flex-col p-[15px] h-full gap-[15px]  ">
+                                        <div className="text-[32px] font-bold">
+                                            {data?.volumeInfo?.title}
+                                        </div>
+
+                                        <div className="flex overflow-hidden  gap-[5px]">{data?.volumeInfo?.categories.map((category:string) => <CategoryItem fullContent title={category}/>)}</div>
+
+                                        <div className="text-[21px] italic">{!!data?.volumeInfo?.authors && `Авторы: ${data?.volumeInfo?.authors.map((author:string) => `${author}, `)}`}</div>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="text-[24px] font-semibold">Описание:</div>
+                                    <div className="text-[18px] ">
+                                        {data?.volumeInfo?.description}
+                                    </div>
+                                </div>
+                            </div>
+                    }
+
+                </div>
+                <div>
+
                 </div>
             </div>
-            <div>
-
-            </div>
         </div>
+
     )
 }
