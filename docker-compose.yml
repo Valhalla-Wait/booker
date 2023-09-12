@@ -1,0 +1,8 @@
+version: '3.8'
+services: 
+  booker:
+    build: 
+      context: .
+    container_name: booker_c
+    ports:
+      - 3000:4173
