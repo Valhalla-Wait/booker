@@ -6,8 +6,9 @@ import { useSelector } from "react-redux"
 import { BookSelectors, BooksThunks } from "@/entities/Book"
 
 export const MainPage = () => {
-    const booksIsFetching = useSelector(BookSelectors.booksIsFetchingSelector)
+    const isFetching = useSelector(BookSelectors.booksIsFetchingSelector)
     const booksTotalCount = useSelector(BookSelectors.booksTotalCountSelector)
+    const isError = useSelector(BookSelectors.booksErrSelector)
 
     const dispatch = useAppDispatch()
 
@@ -23,9 +24,14 @@ export const MainPage = () => {
             <div className="flex items-center flex-col gap-[20px] pt-[35%]">
                 <Search onSearch={getBooksHandler} />
                 <div className="text-[24px] font-semibold">{booksTotalCount && `Найдено книг: ${booksTotalCount}`}</div>
+                {isError && <div className="text-center">
+                            <div className="text-[24px] font-semibold">Loading Books...</div>
+                        </div>}
                 {
-                    booksIsFetching ?
-                        <div className="text-[18px] font-semibold">Loading Books...</div>
+                    isFetching ?
+                        <div className="text-center">
+                            <div className="text-[24px] font-semibold">Loading Books...</div>
+                        </div>
                         :
                         <BookList />}
             </div>

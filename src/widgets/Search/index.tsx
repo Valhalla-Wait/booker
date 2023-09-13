@@ -1,6 +1,6 @@
 import { FilterField } from "@/features/FilterField"
 import { useState } from "react"
-import { SearchField } from "../../features/SearchField"
+import { SearchField } from "../../features/SearchField/ui/SearchField"
 
 type PropsType = {
     onSearch: (searchData: SearchDataI) => void
