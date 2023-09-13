@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { getErrorMessage } from "../../utils/getErrorMessage";
+import { getErrorMessage } from "./getErrorMessage";
 import { NetworkError } from "./errors";
 import { TApiResponse } from "./types";
 

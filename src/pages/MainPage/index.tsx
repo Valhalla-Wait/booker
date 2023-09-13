@@ -1,38 +1,34 @@
+import { MainLayout } from "@/app/layouts/mainLayout"
+import { BookList } from "@/widgets/BookList"
+import { Search, SearchDataI } from "@/widgets/Search"
+import { useAppDispatch } from "@/shared/model/hooks"
 import { useSelector } from "react-redux"
-import { BookList } from "../../components/BookList"
-import { Search, SearchDataI } from "../../components/Search"
-import { useAppDispatch } from "../../store"
-import { fetchBooks } from "../../store/slice/booksSlice"
-import { booksDataSelector, booksIsFetchingSelector, booksTotalCountSelector } from "../../store/slice/selectors"
-// import { useLazyGetBooksQuery } from "../../store/slice/booksSlice"
+import { BookSelectors, BooksThunks } from "@/entities/Book"
 
 export const MainPage = () => {
-
-    // const [getBooks, { data, isLoading }] = useLazyGetBooksQuery()
-    const books = useSelector(booksDataSelector)
-    const booksIsFetching = useSelector(booksIsFetchingSelector)
-    const booksTotalCount = useSelector(booksTotalCountSelector)
+    const booksIsFetching = useSelector(BookSelectors.booksIsFetchingSelector)
+    const booksTotalCount = useSelector(BookSelectors.booksTotalCountSelector)
 
     const dispatch = useAppDispatch()
-    
 
-    const getBooksHandler = (searchData: SearchDataI) => dispatch(fetchBooks({
+
+    const getBooksHandler = (searchData: SearchDataI) => dispatch(BooksThunks.fetchBooks({
         title: searchData.inputValue,
-        orderBy: searchData.sort.title,
-        category: searchData.category.title
+        orderBy: searchData.sort,
+        category: searchData.category
     }))
 
-    console.log(books)
-
     return (
-        <div className="flex items-center flex-col mx-auto justify-flext-start pt-[15%] max-w-[1200px] px-[50px] gap-[20px]">
-            <Search onSearch={getBooksHandler} />
-            <div className="text-[24px] font-semibold">{booksTotalCount && `Найдено книг: ${booksTotalCount}`}</div>
-            {
-                booksIsFetching ?
-                    'Loading Books...'
-                    :
-                    <BookList bookList={books.map((book) => book)} />}
-        </div>
+        <MainLayout>
+            <div className="flex items-center flex-col gap-[20px] pt-[35%]">
+                <Search onSearch={getBooksHandler} />
+                <div className="text-[24px] font-semibold">{booksTotalCount && `Найдено книг: ${booksTotalCount}`}</div>
+                {
+                    booksIsFetching ?
+                        <div className="text-[18px] font-semibold">Loading Books...</div>
+                        :
+                        <BookList />}
+            </div>
+        </MainLayout>
     )
 }
