@@ -1,5 +1,5 @@
+import { booksSlice } from '@/entities/Book';
 import 'whatwg-fetch';
-import { booksSlice } from "../store/slice/booksSlice"
 
 test('return initial state', () => {
     expect(booksSlice.reducer(undefined, {type: undefined})).toEqual({

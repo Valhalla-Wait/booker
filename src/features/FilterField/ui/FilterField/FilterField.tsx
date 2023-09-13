@@ -17,7 +17,7 @@ export const FilterField = ({ type, onChange, selectItem }: PropsType) => {
     const onChangeHandler = (item: string) => onChange(item)
 
     return (
-        <Listbox className='w-[110px] sm:w-[150px]' value={selectItem} onChange={onChangeHandler}>
+        <Listbox as='div' className='w-[110px] sm:w-[150px]' value={selectItem} onChange={onChangeHandler}>
             <div className="relative">
                 <FilterFieldListButton>
                     {selectItem}
@@ -28,7 +28,7 @@ export const FilterField = ({ type, onChange, selectItem }: PropsType) => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Listbox.Options className='absolute w-[inherit]'>
+                    <Listbox.Options className='absolute w-full'>
                         {
                             FilterOptions[type].map((item, index) =>
                                 (item !== selectItem)
